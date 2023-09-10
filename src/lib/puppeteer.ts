@@ -1,4 +1,3 @@
-import { promises } from 'dns'
 import puppeteer from 'puppeteer'
 require('dotenv').config()
 
