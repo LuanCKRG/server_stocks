@@ -11,4 +11,4 @@ RUN npm ci
 COPY . .
 
 
-CMD [ "node", "build/server.js" ]
+CMD [ "node", "server.js" ]
