@@ -8,7 +8,7 @@ WORKDIR /usr/src/app/
 
 COPY package*.json ./
 RUN npm ci
-COPY ./src
+COPY ./src .
 
 RUN npm run build
 
