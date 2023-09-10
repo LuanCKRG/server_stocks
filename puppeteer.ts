@@ -5,12 +5,14 @@ export const getData = async (enterprise: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${enterprise}`
   // const browser = await puppeteer.launch({ args: [], executablePath: exePath, headless: true })
   const browser = await puppeteer.launch({
+    headless: 'new',
     args: [
       '--disable-setuid-sandbox',
       '--no-sandbox',
       '--single-process',
       '--no-zygote',
     ],
+    timeout: 0,
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
   })
   const page = await browser.newPage()

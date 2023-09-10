@@ -9,8 +9,9 @@ const port = 3000
 
 app.post<{Body: string}>('/', 
   async (req, res) => {
-      const enterprise = req.body
-      console.log(enterprise)
+    const enterprise = req.body
+    // const enterprise = 'gerdau'
+    console.log(enterprise)
       const data = await getData(enterprise)
       res.send(data)
     // res.send('foi')
