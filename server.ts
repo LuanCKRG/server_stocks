@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-import {getData} from './lib/puppeteer'
+import {getData} from './puppeteer'
 
 const app = fastify({
   logger: true
