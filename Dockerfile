@@ -10,7 +10,4 @@ COPY package*.json ./
 RUN npm ci
 COPY ./src .
 
-RUN npm run build
-
-
 CMD [ "node", "server.js" ]
