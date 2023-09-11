@@ -1,9 +1,11 @@
-import puppeteer from 'puppeteer'
+import puppeteer, { Page } from 'puppeteer'
 require('dotenv').config()
 
 export const getData = async (enterprise: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${enterprise}`
   // const browser = await puppeteer.launch({ args: [], executablePath: exePath, headless: true })
+
+
   const browser = await puppeteer.launch({
     headless: true,
     args: [
@@ -14,56 +16,63 @@ export const getData = async (enterprise: string) => {
     ],
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
   })
+
   const page = await browser.newPage()
-  await page.goto(url, { waitUntil: 'load' })
   
-  await Promise.all([
-    page.$eval('div.s-col-12.resultados > div:nth-child(1) > a', 
-      (element) => {
-        console.log(element)
-        element.click()
-      }
-    ),
-    page.waitForNavigation({waitUntil: 'load'})
-  ])
-  
-  const href = page.url()
+  try {
+    await page.goto(url, { waitUntil: 'load' })
 
-  const {date, subtitle, title} = await Promise.all([
-    page.$eval('h1.titulo', 
-      (element) => {
-        return element.textContent ?? ''
-      }
-    ),
-    page.$eval('h2.sub', 
-      (element) => {
-        return element.textContent ?? ''
-      }
-    ),
-    page.$eval('span.info', 
-      (element) => {
-        return element.textContent ?? ''
-      }
-    ),
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'load' }),
+      page.$eval('div.s-col-12.resultados > div:nth-child(1) > a',
+        (element) => {
+          console.log(element)
+          element.click()
+        }
+      )
+    ])
 
-  ]).then((value) => {
+    const href = page.url()
+
+    const { date, subtitle, title } = await Promise.all([
+      page.$eval('h1.titulo',
+        (element) => {
+          return element.textContent ?? ''
+        }
+      ),
+      page.$eval('h2.sub',
+        (element) => {
+          return element.textContent ?? ''
+        }
+      ),
+      page.$eval('span.info',
+        (element) => {
+          return element.textContent ?? ''
+        }
+      ),
+
+    ]).then((value) => {
+      return {
+        title: value[0],
+        subtitle: value[1],
+        date: value[2]
+      }
+    })
+
+
     return {
-      title: value[0],
-      subtitle: value[1],
-      date: value[2]
+      token: getToken(title),
+      targetPrice: getTargetPrice(subtitle),
+      recomendation: getRecomedation(subtitle),
+      src: 'Banco Safra',
+      href,
+      date
     }
-  })
-
-  await page.close()
-  await browser.close()
-
-  return {
-    token: getToken(title),
-    targetPrice: getTargetPrice(subtitle),
-    recomendation: getRecomedation(subtitle),
-    src: 'Banco Safra',
-    href,
-    date
+  } catch (err) {
+    console.error(err)
+  } finally {
+    await page.close()
+    await browser.close()
   }
 }
 
