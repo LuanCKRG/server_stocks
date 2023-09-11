@@ -1,4 +1,4 @@
-import puppeteer, { Page } from "puppeteer";
+import puppeteer from "puppeteer";
 require("dotenv").config();
 
 export const getData = async ({ enterprise }: { enterprise: string }) => {

@@ -8,7 +8,7 @@ const app = fastify({
 
 const port = 3000;
 
-app.get<{ Body: string }>("/", async (req, res) => {
+app.post<{ Body: string }>("/", async (req, res) => {
   const { enterprise } = JSON.parse(req.body);
   const data = await getData({ enterprise });
   res.send(data);
