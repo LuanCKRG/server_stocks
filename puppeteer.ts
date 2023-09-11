@@ -1,19 +1,20 @@
 import puppeteer from "puppeteer";
-require("dotenv").config();
+// require("dotenv").config();
 
 export const getData = async ( enterprise: string) => {
+  console.log(enterprise)
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${enterprise}`;
   // const browser = await puppeteer.launch({ args: [], executablePath: exePath, headless: true })
 
   const browser = await puppeteer.launch({
-    headless: "new",
+    headless: 'new',
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
       "--single-process",
       "--no-zygote",
     ],
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+    // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
   });
 
   const page = await browser.newPage();
@@ -67,6 +68,11 @@ export const getData = async ( enterprise: string) => {
     await browser.close();
   }
 };
+
+const teste = 'oiiiiiiiteste'
+
+// const data = getData('gerdau').then(v => v)
+// console.log(data.then(v => v))
 
 const getRecomedation = (subTitle: string) => {
   const recomendations: string[] = ["neutra", "compra", "venda", "revisão"];
