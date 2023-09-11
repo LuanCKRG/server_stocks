@@ -12,7 +12,6 @@ export const getData = async (enterprise: string) => {
       '--single-process',
       '--no-zygote',
     ],
-    timeout: 0,
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH
   })
   const page = await browser.newPage()
