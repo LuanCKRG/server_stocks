@@ -36,13 +36,6 @@ app.post<{ Body: string }>('/',
   }
 )
 
-app.post<{ Body: string }>("/", async (req, res) => {
-  const enterprise = req.body;
-  // const enterprise = 'gerdau'
-  const data = await getData(enterprise);
-  res.send(data);
-});
-
 app.listen({ port: port, host: "0.0.0.0" }, (err, adress) => {
   if (err) {
     app.log.error(err);
