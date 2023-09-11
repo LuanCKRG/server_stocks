@@ -13,7 +13,7 @@ app.register(cors, {
 const port = 3000;
 
 app.post<{ Body: string }>("/", async (req, res) => {
-  const { enterprise } = JSON.parse(req.body);
+  const { enterprise } = req.body;
   // const enterprise = 'gerdau'
   const data = await getData({ enterprise });
   res.send(data);
