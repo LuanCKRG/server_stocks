@@ -1,7 +1,7 @@
 import puppeteer from "puppeteer";
 require("dotenv").config();
 
-export const getData = async ({ enterprise }: { enterprise: string }) => {
+export const getData = async ( enterprise: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${enterprise}`;
   // const browser = await puppeteer.launch({ args: [], executablePath: exePath, headless: true })
 
