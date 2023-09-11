@@ -6,7 +6,7 @@ export const getData = async ({ enterprise }: { enterprise: string }) => {
   // const browser = await puppeteer.launch({ args: [], executablePath: exePath, headless: true })
 
   const browser = await puppeteer.launch({
-    headless: "true",
+    headless: "new",
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
