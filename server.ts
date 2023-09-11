@@ -1,20 +1,15 @@
 import fastify from "fastify";
-import cors from "@fastify/cors";
+
 import { getData } from "./puppeteer";
 
 const app = fastify({
   logger: true,
 });
 
-app.register(cors, {
-  origin: "*",
-});
-
 const port = 3000;
 
-app.post<{ Body: string }>("/", async (req, res) => {
+app.get<{ Body: string }>("/", async (req, res) => {
   const { enterprise } = JSON.parse(req.body);
-  // const enterprise = 'gerdau'
   const data = await getData({ enterprise });
   res.send(data);
 });
