@@ -11,7 +11,6 @@ export const getData = async ( enterprise: string) => {
     args: [
       "--disable-setuid-sandbox",
       "--no-sandbox",
-      "--single-process",
       "--no-zygote",
     ],
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
