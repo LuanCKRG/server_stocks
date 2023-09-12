@@ -1,5 +1,5 @@
-import puppeteer from "puppeteer";
-// require("dotenv").config();
+import puppeteer from "puppeteer"
+require("dotenv").config();
 
 export const getData = async ( enterprise: string) => {
   console.log(enterprise)
@@ -14,7 +14,7 @@ export const getData = async ( enterprise: string) => {
       "--single-process",
       "--no-zygote",
     ],
-    // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
   });
 
   const page = await browser.newPage();
@@ -69,7 +69,7 @@ export const getData = async ( enterprise: string) => {
   }
 };
 
-const teste = 'oiiiiiiiteste'
+
 
 // const data = getData('gerdau').then(v => v)
 // console.log(data.then(v => v))
