@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-// import cors from "@fastify/cors"
+import cors from "@fastify/cors"
 import views from '@fastify/view'
 import forms from '@fastify/formbody'
 import ejs from 'ejs'
@@ -23,13 +23,24 @@ app.register(views, {
   root: path.join(__dirname, '..', 'views'),
   viewExt: 'ejs'
 })
-  
+
+app.register(cors, {
+  origin: "*",
+  credentials:true,
+})
 
 app.register(forms)
 
 app.get('/',
   (req, res) => {
     res.view('/index', {teste: 'oiasfweoi'})
+  }
+)
+
+app.post('/',
+  async (req: any, res) => {
+    const data = await getData(req.body.name)
+    res.send(data)
   }
 )
 
@@ -44,6 +55,7 @@ app.post('/results',
   async (req: any, res) => {
     const data = await getData(req.body.name)
     return res.view('/results', {data: data, async: true})
+    // return res.view('/results', {data: req.body.name})
   }
 )
 
