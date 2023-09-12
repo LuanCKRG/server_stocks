@@ -42,8 +42,8 @@ app.get('/results',
 
 app.post('/results',
   async (req: any, res) => {
-    // const data = await getData(req.body.name)
-    return res.view('/results', {data: 'oiiii', async: true})
+    const data = await getData(req.body.name)
+    return res.view('/results', {data: data, async: true})
   }
 )
 
