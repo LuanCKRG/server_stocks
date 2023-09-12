@@ -13,14 +13,20 @@
   
   <%- include('./components/header') %>
 
-  <span class="flex justify-center items-center my-4 px-4">
+  <div class="flex justify-center items-center my-4 px-4">
     <%- include('./components/search_bar') %>
-  </span>
+  </div>
 
+  <% if(data === undefined) {%>
+    <div class="flex justify-center items-center">
+      Busque por um token para obter resultados...
+    </div>
+  <%} else {%>
+    <div class="flex flex-col space-y-4 justify-center sm:space-y-0 sm:grid sm:gap-4 sm:grid-cols-2 lg:gap-8 lg:grid-cols-3 px-4">
+      <%- include('./components/stock', {token: data.token, href: data.href, src: data.src, targetPrice: data.targetPrice, recomendation: data.recomendation, date: data.date}) %>
+    </div>
+  <%}%>
 
-  <% if(true) {%>
-    <h2><%= teste %></h2>
-    <% } %>
 </body>
 
 </html>

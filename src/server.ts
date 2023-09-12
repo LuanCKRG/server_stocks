@@ -3,16 +3,12 @@ import cors from "@fastify/cors"
 import views from '@fastify/view'
 import forms from '@fastify/formbody'
 import ejs from 'ejs'
-import path from 'path';
-import { getData } from './puppeteer'
+import path from 'path'
+import { getData } from './scrape'
 
 const app = fastify({
   logger: true,
 });
-
-// app.register(cors, {
-//   origin: "*",
-// });
 
 const port = 3000;
 
@@ -26,36 +22,22 @@ app.register(views, {
 
 app.register(cors, {
   origin: "*",
-  credentials:true,
+  credentials: true,
 })
 
 app.register(forms)
 
 app.get('/',
   (req, res) => {
-    res.view('/index', {teste: 'oiasfweoi'})
+    res.view('/index', { data: undefined })
   }
 )
 
 app.post('/',
   async (req: any, res) => {
     const data = await getData(req.body.name)
-    res.send(data)
-  }
-)
-
-app.get('/results',
-  (req, res) => {
-    console.table(req)
-    return res.send(req.body)
-  }
-)
-
-app.post('/results',
-  async (req: any, res) => {
-    const data = await getData(req.body.name)
-    return res.view('/results', {data: data, async: true})
-    // return res.view('/results', {data: req.body.name})
+    return res.view('/index', {data: data, async: true})
+    // return res.view('/index', { data: req.body.name })
   }
 )
 
