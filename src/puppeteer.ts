@@ -7,13 +7,12 @@ export const getData = async ( enterprise: string) => {
   // const browser = await puppeteer.launch({ args: [], executablePath: exePath, headless: true })
 
   const browser = await puppeteer.launch({
-    headless: 'new',
-    args: [
-      "--disable-setuid-sandbox",
-      "--no-sandbox",
-      "--no-zygote",
-    ],
-    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+    headless: true,
+      executablePath: '/usr/bin/chromium-browser',
+      args: [
+        '--no-sandbox',
+        '--disable-gpu',
+      ]
   });
 
   const page = await browser.newPage();

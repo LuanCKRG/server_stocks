@@ -1,20 +1,24 @@
+FROM node:lts-alpine
 
-FROM ghcr.io/puppeteer/puppeteer:21.1.1
+WORKDIR /app
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable \
-    NODE_PATH=./build
+RUN apk update && apk add --no-cache nmap && \
+    echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache \
+      chromium \
+      harfbuzz \
+      "freetype>2.8" \
+      ttf-freefont \
+      nss
 
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
+COPY . /app
 
-WORKDIR /usr/src/app/
-
-COPY package*.json ./
-
-RUN npm ci
-
-COPY . .
+RUN npm install
 
 EXPOSE 3000
 
-CMD npm start
+CMD ["npm", "start"]
