@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-import { routes } from 'routes'
+import { routes } from './routes'
 import cors from "@fastify/cors"
 import views from '@fastify/view'
 import forms from '@fastify/formbody'

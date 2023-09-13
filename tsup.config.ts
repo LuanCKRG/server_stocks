@@ -6,7 +6,6 @@ export default defineConfig([
     outDir: 'src',
     splitting: true,
     target: 'es2020',
-    format: 'esm',
     minify: true,
     treeshake: true,
     bundle: false,

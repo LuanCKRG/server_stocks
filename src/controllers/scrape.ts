@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from "fastify"
 import puppeteer from "puppeteer"
 import "dotenv/config"
-import { getToken, getTargetPrice, getRecomedation } from "utils/safra_utils"
+import { getToken, getTargetPrice, getRecomedation } from "../utils/safra_utils"
 
 interface getDataProps {
   token: string
