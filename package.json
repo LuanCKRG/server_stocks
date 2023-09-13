@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "start": "npm run build && node build/server.js",
-    "build": "tsup src --out-dir build",
+    "start": "npm run build && node src/server.js",
+    "build": "tsup ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
