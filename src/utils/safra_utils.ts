@@ -1,6 +1,6 @@
 
 export const getRecomedation = (subTitle: string) => {
-  const recomendations: string[] = ['neutra', 'compra', 'venda', 'revisão']
+  const recomendations: string[] = ['neutra', 'compra', 'venda', 'revisão', 'outperform']
 
   for (const recomendation of recomendations) {
     if (subTitle.toLowerCase().includes(recomendation)) {
@@ -24,7 +24,7 @@ export const getToken = (phrase: string) => {
 
 export const getTargetPrice = (subTitle: string) => {
   for (const word of subTitle.split(' ')) {
-    if (/[R]?[$]?[ ]?(\d{2}\,?\.?)+/.test(word)) {
+    if (/[R]?[$]?[ ]?(\d{2}\,?\.?)/.test(word) && (word.length <= 5)) {
       return word
     }
   }
