@@ -1,7 +1,8 @@
 import type { FastifyReply, FastifyRequest } from "fastify"
 import puppeteer from "puppeteer"
 import "dotenv/config"
-import { getToken, getTargetPrice, getRecomedation } from "../utils/safra_utils"
+import { get_safra_data } from "components/safra"
+import { get_data_inter } from "components/inter"
 
 interface getDataProps {
   token: string
@@ -9,14 +10,13 @@ interface getDataProps {
 
 export const safra_data = {
   index: (req: FastifyRequest, res: FastifyReply) => {
-    return res.view('index', {data: undefined})
+    return res.view('index', {stocks: undefined})
   },
 
   get: async ({ body }: FastifyRequest<{ Body: getDataProps }>, res: FastifyReply) => {
-    const enterprise = body.token.toLowerCase()
+    const token = body.token.toLowerCase()
 
-    console.log(enterprise)
-    const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${enterprise}`
+    console.log(token)
 
     const browser = await puppeteer.launch({
       headless: true,
@@ -29,85 +29,13 @@ export const safra_data = {
 
     const page = await browser.newPage()
 
-    try {
-      await page.goto(url, { waitUntil: "load" })
+    const safra_data = await get_safra_data(page, token)
+    const inter_data = await get_data_inter(page, token)
 
-      const button  = await page.waitForSelector('div.load-more > a.botao-outline')
-      await button?.click()
-      await button?.click()
-      await button?.dispose()
-      
-      await Promise.all([
-        page.exposeFunction('getToken', getToken),
-        page.waitForNavigation({ waitUntil: "load" }),
-        page.$$eval(
-          "div.s-col-12.resultados > div",
-          async (elements, enterprise: string) => {
+    await page.close()
+    await browser.close()
 
-
-            for (const element of elements) {
-              console.log(element)
-              /* @ts-expect-error: the function getToken() is not native from window */
-              const token: string = await window.getToken(element.querySelector('p.cat')?.textContent ?? 'Não deu não mano').then((token: string) => token.toLowerCase())
-
-              if (token === enterprise) {
-                element.querySelector('a')?.click()
-                break
-              }
-            }
-          },
-          enterprise
-        ),
-      ])
-
-      const href = page.url()
-
-      const { date, subtitle, title } = await Promise.all([
-        page.$eval("h1.titulo", (element) => {
-          return element.textContent ?? ""
-        }),
-        page.$eval("h2.sub", (element) => {
-          return element.textContent ?? ""
-        }),
-        page.$eval("span.info", (element) => {
-          return element.textContent ?? ""
-        }),
-      ]).then((value) => {
-        return {
-          title: value[0],
-          subtitle: value[1],
-          date: value[2],
-        }
-      })
-
-      const data = {
-        token: getToken(title),
-        targetPrice: getTargetPrice(subtitle),
-        recomendation: getRecomedation(subtitle),
-        src: "Banco Safra",
-        href,
-        date,
-      }
-
-      return res.view('index', { data: data })
-
-    } catch (err) {
-      console.error(err)
-
-      const data = {
-        token: 'Não foi possível localizar o token',
-        targetPrice: 'Não foi possível localizar o preço alvo',
-        recomendation: 'Não foi possível localizar a recomendação',
-        src: "Banco Safra",
-        href: url,
-        date: 'Não foi possível localizar a data',
-      }
-
-      return res.view('index', { data: data })
-
-    } finally {
-      await page.close()
-      await browser.close()
-    }
+    // return res.view('index', {stocks: [safra_data]})
+    return res.view('index', {stocks: [safra_data, inter_data]})
   }
 }
