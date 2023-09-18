@@ -18,7 +18,7 @@ export const get_data_inter = async (page: Page, search: string) => {
     )
 
     const token = await Promise.all([
-      page.waitForNavigation({ waitUntil: "domcontentloaded", timeout: 15 * 1000 }),
+      page.waitForNavigation({ waitUntil: "domcontentloaded"}),
       page.$$eval("div.container >  div:nth-child(2) > div:nth-child(2).row > div.col-12.col-md-6.mb-4",
         (element, search) => {
 
