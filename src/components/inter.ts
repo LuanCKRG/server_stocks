@@ -6,18 +6,16 @@ export const get_data_inter = async (page: Page, search: string) => {
   try {
     await page.goto(url, { waitUntil: "domcontentloaded" })
 
-    const input = await page.waitForSelector("div.row.mb-4.mt-5 > div > div > input[type=text]").catch(
-      (e) => {
-        console.error(e)
+    await page.$eval('div.row.mb-4.mt-5 > div > div > input[type=text]',
+      (element) => {
+        element.click()
+      }
+    ).catch(
+      (err) => {
+        console.error(err)
         throw new Error('Error on Input(Inter)')
       }
     )
-
-    if (input !== null) {
-      await input.type(search)
-    }
-
-    await input?.dispose()
 
     const token = await Promise.all([
       page.waitForNavigation({ waitUntil: "domcontentloaded", timeout: 15 * 1000 }),
