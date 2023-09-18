@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang='pt-br'>
+<html lang="pt-br">
 
 <head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="module" defer src="../puppeteer.ts"></script>
   <title>CK | Ações</title>
@@ -11,10 +11,10 @@
 
 <body class="body">
   
-  <%- include('./components/header') %>
+  <%- include("./components/header") %>
 
   <div class="flex justify-center items-center my-4 px-4">
-    <%- include('./components/search_bar') %>
+    <%- include("./components/search_bar") %>
   </div>
 
   <% if(stocks === undefined) {%>
@@ -24,7 +24,7 @@
   <%} else {%>
     <div class="flex flex-col space-y-4 justify-center sm:space-y-0 sm:grid sm:gap-4 sm:grid-cols-2 lg:gap-8 lg:grid-cols-3 px-4">
       <% for (const data of stocks) {%>
-        <%- include('./components/stock', {token: data.token, href: data.href, src: data.src, targetPrice: data.targetPrice, recomendation: data.recomendation, date: data.date}) %>
+        <%- include("./components/stock", {token: data.token, href: data.href, src: data.src, targetPrice: data.targetPrice, recomendation: data.recomendation, date: data.date}) %>
       <%} %>
     </div>
   <%}%>

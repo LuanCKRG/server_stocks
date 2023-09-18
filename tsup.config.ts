@@ -1,14 +1,14 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from "tsup"
 
 export default defineConfig([
   {
-    entry: ['src/**/*.ts'],
-    outDir: 'src',
+    entry: ["src/**/*.ts"],
+    outDir: "src",
     splitting: true,
-    target: 'es2020',
+    target: "es2020",
     minify: true,
     treeshake: true,
     bundle: false,
-    tsconfig: './tsconfig.json'
+    tsconfig: "./tsconfig.json"
   }
-]);
+])
