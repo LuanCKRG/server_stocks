@@ -6,7 +6,7 @@ export const get_data_inter = async (page: Page, search: string) => {
   try {
     await page.goto(url, { waitUntil: "domcontentloaded" })
 
-    const input = await page.waitForSelector("div.row.mb-4.mt-5 > div > div > input[type=text]", { timeout: 0 }).catch(
+    const input = await page.waitForSelector("div.row.mb-4.mt-5 > div > div > input[type=text]").catch(
       (e) => {
         console.error(e)
         throw new Error('Error on Input(Inter)')
