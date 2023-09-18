@@ -32,7 +32,6 @@ export const data = {
     await page.close()
     await browser.close()
 
-    // return res.view("index", {stocks: [safra_data]})
     return res.view("index", { stocks: [safra_data, inter_data] })
   },
 }

@@ -4,9 +4,14 @@ export const get_data_inter = async (page: Page, search: string) => {
   const url = "https://interinvest.inter.co/acoes"
 
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 15 * 1000 })
+    await page.goto(url, { waitUntil: "domcontentloaded" })
 
-    const input = await page.waitForSelector("input[placeholder='Buscar por ativos']")
+    const input = await page.waitForSelector("div.row.mb-4.mt-5 > div > div > input[type=text]", {timeout: 5 * 1000}).catch(
+      (e) => {
+        console.error(e)
+        throw new Error('Error on Input(Inter)')
+      }
+    )
 
     if (input !== null) {
       await input.type(search)
@@ -15,7 +20,7 @@ export const get_data_inter = async (page: Page, search: string) => {
     await input?.dispose()
 
     const token =  await Promise.all([
-      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      page.waitForNavigation({ waitUntil: "domcontentloaded", timeout: 15 * 1000 }),
       page.$$eval("div.container >  div:nth-child(2) > div:nth-child(2).row > div.col-12.col-md-6.mb-4",
         (element, search) => {
 
