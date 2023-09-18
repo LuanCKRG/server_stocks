@@ -1,5 +1,5 @@
 import type { Page } from "puppeteer"
-import { getToken, getTargetPrice, getRecomedation } from "utils/safra_utils"
+import { getToken, getTargetPrice, getRecomedation } from "../utils/safra_utils"
 
 export const get_safra_data = async (page: Page, token: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${token}`
