@@ -25,7 +25,6 @@ export const data = {
     })
 
     const page = await browser.newPage()
-    page.setDefaultTimeout(10 * 1000)
 
     const safra_data = await get_safra_data(page, token)
     const inter_data = await get_data_inter(page, token)
