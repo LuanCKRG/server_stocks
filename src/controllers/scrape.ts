@@ -1,8 +1,8 @@
 import type { FastifyReply, FastifyRequest } from "fastify"
 import puppeteer from "puppeteer"
-import "dotenv/config"
 import { get_safra_data } from "../components/safra"
 import { get_data_inter } from "../components/inter"
+// import "dotenv/config"
 
 interface getDataProps {
   token: string
@@ -13,21 +13,19 @@ export const data = {
     return res.view("index", { stocks: undefined })
   },
 
-  get: async (
-    { body }: FastifyRequest<{ Body: getDataProps }>,
-    res: FastifyReply,
-  ) => {
+  get: async ( { body }: FastifyRequest<{ Body: getDataProps }>, res: FastifyReply ) => {
     const token = body.token.toLowerCase()
 
     console.log(token)
 
     const browser = await puppeteer.launch({
-      headless: true,
-      executablePath: "/usr/bin/chromium-browser",
-      args: ["--no-sandbox", "--disable-gpu"],
+      headless: false,
+      // executablePath: "/usr/bin/chromium-browser",
+      args: ["--no-sandbox", "--disable-gpu"]
     })
 
     const page = await browser.newPage()
+    page.setDefaultTimeout(10 * 1000)
 
     const safra_data = await get_safra_data(page, token)
     const inter_data = await get_data_inter(page, token)

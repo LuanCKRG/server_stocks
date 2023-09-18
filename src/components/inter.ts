@@ -7,7 +7,11 @@ export const get_data_inter = async (page: Page, search: string) => {
     await page.goto(url, { waitUntil: "domcontentloaded" })
 
     const input = await page.waitForSelector("input[placeholder='Buscar por ativos']")
-    await input?.type(search)
+
+    if (input !== null) {
+      await input.type(search)
+    }
+
     await input?.dispose()
 
     const token =  await Promise.all([
@@ -27,7 +31,18 @@ export const get_data_inter = async (page: Page, search: string) => {
           }
         }, search
       )
-    ]).then((value) => value[1])
+    ]).then(
+      (value) => {
+        return value[1] ?? 'Não foi possível localizar o token'
+      }
+    ).catch(
+      (err) => {
+        console.log('Error on Promise.all in Inter component')
+        console.error(err)
+
+        return 'Não foi possível localizar o token'
+      }
+    )
 
     const { recomendation, targetPrice } = await page.$$eval("div.row > div.col-12.col-md-4.col-lg-12.order-md-last.mb-4 > div:nth-child(1) >  div > span",
       (elements) => {

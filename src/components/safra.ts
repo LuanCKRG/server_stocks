@@ -7,18 +7,24 @@ export const get_safra_data = async (page: Page, token: string) => {
   try {
     await page.goto(url, { waitUntil: "load" })
 
-    const button = await page.waitForSelector("div.load-more > a.botao-outline")
+    const button = await page.waitForSelector('div.load-more > a.botao-outline')
 
     if (button !== null) {
-      await button.click()
-      await button.click()
+      try {
+        await button.click()
+        await button.click()
+      }
+      catch (err) {
+        console.log('Error on Safra button')
+        console.error(err)
+      }
     }
     
     await button?.dispose()
     
     await Promise.all([
-      page.exposeFunction("getToken", getToken),
-      page.waitForNavigation({ waitUntil: "load" }),
+      page.exposeFunction('getToken', getToken),
+      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
       page.$$eval(
         "div.s-col-12.resultados > div",
         async (elements, enterprise: string) => {
@@ -26,17 +32,22 @@ export const get_safra_data = async (page: Page, token: string) => {
           for (const element of elements) {
             console.log(element)
             /* @ts-expect-error: the function getToken() is not native from window */
-            const token: string = await window.getToken(element.querySelector("p.cat")?.textContent ?? "Não deu não mano").then((token: string) => token.toLowerCase())
+            const token: string = await window.getToken(element.querySelector('p.cat')?.textContent ?? 'Não deu não mano').then((token: string) => token.toLowerCase())
 
             if (token === enterprise) {
-              element.querySelector("a")?.click()
+              element.querySelector('a')?.click()
               break
             }
           }
         },
         token
       ),
-    ])
+    ]).catch(
+      (err) => {
+        console.log('Error on Promise.all in safra component')
+        console.error(err)
+      }
+    )
 
     const href = page.url()
 
@@ -73,15 +84,14 @@ export const get_safra_data = async (page: Page, token: string) => {
     console.error(err)
 
     const data = {
-      token: "Não foi possível localizar o token",
-      targetPrice: "Não foi possível localizar o preço alvo",
-      recomendation: "Não foi possível localizar a recomendação",
+      token: 'Não foi possível localizar o token',
+      targetPrice: 'Não foi possível localizar o preço alvo',
+      recomendation: 'Não foi possível localizar a recomendação',
       src: "Banco Safra",
       href: url,
-      date: "Não foi possível localizar a data",
+      date: 'Não foi possível localizar a data',
     }
 
     return data 
-
   }
 }
