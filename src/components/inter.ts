@@ -4,7 +4,7 @@ export const get_data_inter = async (page: Page, search: string) => {
   const url = "https://interinvest.inter.co/acoes"
 
   try {
-    await page.goto(url, { waitUntil: "domcontentloaded" })
+    await page.goto(url, { waitUntil: "domcontentloaded", timeout: 15 * 1000 })
 
     const input = await page.waitForSelector("input[placeholder='Buscar por ativos']")
 
