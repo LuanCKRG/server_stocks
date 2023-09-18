@@ -6,7 +6,7 @@ export const get_data_inter = async (page: Page, search: string) => {
   try {
     await page.goto(url, { waitUntil: "domcontentloaded" })
 
-    const input = await page.waitForSelector("div.row.mb-4.mt-5 > div > div > input[type=text]", {timeout: 5 * 1000}).catch(
+    const input = await page.waitForSelector("div.row.mb-4.mt-5 > div > div > input[type=text]", { timeout: 0 }).catch(
       (e) => {
         console.error(e)
         throw new Error('Error on Input(Inter)')
@@ -19,7 +19,7 @@ export const get_data_inter = async (page: Page, search: string) => {
 
     await input?.dispose()
 
-    const token =  await Promise.all([
+    const token = await Promise.all([
       page.waitForNavigation({ waitUntil: "domcontentloaded", timeout: 15 * 1000 }),
       page.$$eval("div.container >  div:nth-child(2) > div:nth-child(2).row > div.col-12.col-md-6.mb-4",
         (element, search) => {
