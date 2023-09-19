@@ -27,6 +27,8 @@ export const get_data_inter = async (page: Page, search: string) => {
               const anchor: HTMLAnchorElement | null = div.querySelector("div > div.d-flex.align-center.justify-content-end > a:nth-child(2)")
               anchor?.click()
               return token_from_scrape
+            } else {
+              throw new Error('Token not found on inter')
             }
           }
         }, search
