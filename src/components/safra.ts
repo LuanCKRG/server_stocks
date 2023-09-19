@@ -30,9 +30,17 @@ export const get_safra_data = async (page: Page, token: string) => {
         async (elements, enterprise: string) => {
 
           for (const element of elements) {
-            console.log(element)
             /* @ts-expect-error: the function getToken() is not native from window */
-            const token: string = await window.getToken(element.querySelector('p.cat')?.textContent ?? 'Não deu não mano').then((token: string) => token.toLowerCase())
+            const token: string = await window.getToken(element.querySelector('p.cat')?.textContent)
+            .then((token: string) => token.toLowerCase())
+            .catch(
+              (err: unknown) => {
+                console.log('catch on check if token is equal to search')
+                console.error(err)
+
+                return 'Algo deu errado'
+              }
+            )
 
             if (token === enterprise) {
               element.querySelector('a')?.click()
@@ -81,6 +89,7 @@ export const get_safra_data = async (page: Page, token: string) => {
     return data
 
   } catch (err) {
+    console.log('Error on safra try/catch')
     console.error(err)
 
     const data = {

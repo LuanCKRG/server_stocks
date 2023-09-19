@@ -6,11 +6,8 @@ export const get_data_inter = async (page: Page, search: string) => {
   try {
     await page.goto(url, { waitUntil: "domcontentloaded" })
 
-    await page.$eval('div.row.mb-4.mt-5 > div > div > input[type=text]',
-      (element) => {
-        element.click()
-      }
-    ).catch(
+    await page.focus('div.row.mb-4.mt-5 > div > div > input[type=text]')
+    await page.keyboard.type(search).catch(
       (err) => {
         console.error(err)
         throw new Error('Error on Input(Inter)')
