@@ -2,7 +2,7 @@ import type { FastifyReply, FastifyRequest } from "fastify"
 import puppeteer from "puppeteer"
 import { get_safra_data } from "../components/safra"
 import { get_data_inter } from "../components/inter"
-// import "dotenv/config"
+import "dotenv/config"
 
 interface getDataProps {
   token: string
@@ -20,7 +20,7 @@ export const data = {
 
     const browser = await puppeteer.launch({
       headless: false,
-      // executablePath: "/usr/bin/chromium-browser",
+      executablePath: "/usr/bin/chromium-browser",
       args: ["--no-sandbox", "--disable-gpu"]
     })
 
