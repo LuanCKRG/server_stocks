@@ -19,7 +19,7 @@ export const data = {
     console.log(token)
 
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: 'new',
       executablePath: "/usr/bin/chromium-browser",
       args: ["--no-sandbox", "--disable-gpu"]
     })

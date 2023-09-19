@@ -23,7 +23,7 @@ export const get_safra_data = async (page: Page, token: string) => {
     await button?.dispose()
     
     await page.exposeFunction('getToken', getToken)
-    
+
     await Promise.all([
       page.waitForNavigation({ waitUntil: "domcontentloaded" }),
       page.$$eval(
@@ -70,6 +70,8 @@ export const get_safra_data = async (page: Page, token: string) => {
         subtitle: value[1],
         date: value[2],
       }
+    }).catch(() => {
+      throw new Error('Not found date, subtitle, tilte from safra')
     })
 
     const data = {
@@ -84,7 +86,6 @@ export const get_safra_data = async (page: Page, token: string) => {
     return data
 
   } catch (err) {
-    console.log('Error on safra try/catch')
     console.error(err)
 
     const data = {
