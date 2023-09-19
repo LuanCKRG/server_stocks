@@ -22,8 +22,9 @@ export const get_safra_data = async (page: Page, token: string) => {
     
     await button?.dispose()
     
+    await page.exposeFunction('getToken', getToken)
+    
     await Promise.all([
-      page.exposeFunction('getToken', getToken),
       page.waitForNavigation({ waitUntil: "domcontentloaded" }),
       page.$$eval(
         "div.s-col-12.resultados > div",
