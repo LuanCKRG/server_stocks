@@ -5,7 +5,10 @@ export const get_safra_data = async (page: Page, token: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${token}`
 
   try {
-    await page.goto(url, { waitUntil: "load" })
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'load' }),
+      page.goto(url, { waitUntil: 'load' })
+    ])
 
     const button = await page.waitForSelector('div.load-more > a.botao-outline')
 

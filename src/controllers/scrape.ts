@@ -3,6 +3,7 @@ import puppeteer from "puppeteer"
 import { get_safra_data } from "../components/safra"
 import { get_data_inter } from "../components/inter"
 import "dotenv/config"
+import { get_data_xp } from "components/xp"
 
 interface getDataProps {
   token: string
@@ -28,10 +29,11 @@ export const data = {
 
     const safra_data = await get_safra_data(page, token)
     const inter_data = await get_data_inter(page, token)
+    const xp_data = await get_data_xp(page, token)
 
     await page.close()
     await browser.close()
 
-    return res.view("index", { stocks: [safra_data, inter_data] })
+    return res.view("index", { stocks: [safra_data, inter_data, xp_data] })
   },
 }
