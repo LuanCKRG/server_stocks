@@ -23,6 +23,7 @@ export const get_data_xp = async (page: Page, search: string) => {
       date: date,
     }
 
+    console.log('XP sucessed!!')
     return data
 
   } catch (err) {

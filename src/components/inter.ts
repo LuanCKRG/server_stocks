@@ -69,6 +69,7 @@ export const get_data_inter = async (page: Page, search: string) => {
 
     }
 
+    console.log('Inter sucessed!!')
     return data
 
   } catch (err) {

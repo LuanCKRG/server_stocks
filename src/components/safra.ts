@@ -78,6 +78,7 @@ export const get_safra_data = async (page: Page, token: string) => {
       date,
     }
 
+    console.log('Safra sucessed!!')
     return data
 
   } catch (err) {

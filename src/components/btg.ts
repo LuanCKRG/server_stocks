@@ -32,6 +32,7 @@ export const get_data_btg = async (page: Page, search: string) => {
       date: 'Não fornecido por BTG Pactual',
     }
 
+    console.log('BTG sucessed!!')
     return data
 
   } catch (err) {
