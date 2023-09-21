@@ -15,6 +15,7 @@ export const get_safra_data = async (page: Page, token: string) => {
       await page.click('div.load-more > a.botao-outline')
     } catch(err) {
       console.error(err)
+      console.log('Eror on button click')
     }
     
     await page.exposeFunction('getToken', getToken)
@@ -27,15 +28,14 @@ export const get_safra_data = async (page: Page, token: string) => {
 
           for (const element of elements) {
             /* @ts-expect-error: the function getToken() is not native from window */
-            const token: string = await window.getToken(element.querySelector('p.cat')?.textContent)
-            .then((token: string) => token.toLowerCase())
+            const token: string = await window.getToken(element.querySelector('p.cat')?.textContent ?? '')
+            .then((value: string) => value.toLowerCase())
             .catch(() => 'Algo deu errado')
 
             if (token === enterprise) {
+              console.log(element)
               element.querySelector('a')?.click()
               break
-            } else {
-              throw new Error('Token not found on safra')
             }
           }
         },
@@ -44,6 +44,7 @@ export const get_safra_data = async (page: Page, token: string) => {
     ]).catch(
       (err) => {
         console.error(err)
+        throw new Error('Token not found on safra')
       }
     )
 

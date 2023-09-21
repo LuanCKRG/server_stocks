@@ -46,5 +46,7 @@ export const get_data_btg = async (page: Page, search: string) => {
       href: url,
       date: "Não foi possível localizar a data",
     }
+
+    return data
   }
 }

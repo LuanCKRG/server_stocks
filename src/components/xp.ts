@@ -27,7 +27,7 @@ export const get_data_xp = async (page: Page, search: string) => {
     return data
 
   } catch (err) {
-    console.error(err)
+    console.error(new Error('Not found page on XP'))
 
     const data = {
       token: "Não foi possível localizar o token",
