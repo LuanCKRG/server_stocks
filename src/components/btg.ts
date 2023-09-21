@@ -4,7 +4,7 @@ export const get_data_btg = async (page: Page, search: string) => {
   const url = `https://content.btgpactual.com/research/home/acoes/ativo/${search.toUpperCase()}`
 
   try {
-    await page.goto(url, { waitUntil: 'load', timeout: 60 * 1000 })
+    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60 * 1000 })
 
 
     // const {} = await Promise.all([
