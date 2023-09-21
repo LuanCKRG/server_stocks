@@ -4,7 +4,7 @@ import { get_safra_data } from "../components/safra"
 import { get_data_inter } from "../components/inter"
 import { get_data_xp } from "../components/xp"
 import { get_data_btg } from "../components/btg"
-// import "dotenv/config"
+import "dotenv/config"
 
 interface getDataProps {
   token: string
@@ -22,7 +22,7 @@ export const data = {
 
     const browser = await puppeteer.launch({
       headless: true,
-      // executablePath: "/usr/bin/chromium-browser",
+      executablePath: "/usr/bin/chromium-browser",
       args: ["--no-sandbox", "--disable-gpu"]
     })
 
