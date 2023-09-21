@@ -3,7 +3,7 @@ import puppeteer from "puppeteer"
 import { get_safra_data } from "../components/safra"
 import { get_data_inter } from "../components/inter"
 import "dotenv/config"
-import { get_data_xp } from "components/xp"
+import { get_data_xp } from "../components/xp"
 
 interface getDataProps {
   token: string
