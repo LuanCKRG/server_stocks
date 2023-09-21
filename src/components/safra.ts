@@ -10,20 +10,12 @@ export const get_safra_data = async (page: Page, token: string) => {
       page.goto(url, { waitUntil: 'load' })
     ])
 
-    const button = await page.waitForSelector('div.load-more > a.botao-outline')
-
-    if (button !== null) {
-      try {
-        await button.click()
-        await button.click()
-      }
-      catch (err) {
-        console.log('Error on Safra button')
-        console.error(err)
-      }
+    try {
+      await page.click('div.load-more > a.botao-outline')
+      await page.click('div.load-more > a.botao-outline')
+    } catch(err) {
+      console.error(err)
     }
-    
-    await button?.dispose()
     
     await page.exposeFunction('getToken', getToken)
 
