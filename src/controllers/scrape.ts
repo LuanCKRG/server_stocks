@@ -28,9 +28,9 @@ export const data = {
 
     const page = await browser.newPage()
 
+    const xp_data = await get_data_xp(page, token)
     const safra_data = await get_safra_data(page, token)
     const inter_data = await get_data_inter(page, token)
-    const xp_data = await get_data_xp(page, token)
     const btg_data = await get_data_btg(page, token)
 
     await page.close()
