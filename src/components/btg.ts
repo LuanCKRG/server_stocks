@@ -4,8 +4,12 @@ export const get_data_btg = async (page: Page, search: string) => {
   const url = `https://content.btgpactual.com/research/home/acoes/ativo/${search.toUpperCase()}`
 
   try {
-    await page.goto(url, {waitUntil: 'load'})
+    await page.goto(url, { waitUntil: 'load', timeout: 60 * 1000 })
 
+
+    // const {} = await Promise.all([
+
+    // ])
     const {token, targetPrice, recomendation} = await page.$eval('body > app-root > app-equities > app-asset-details > section:nth-child(1) > div > div.cell-4-phone.cell-8-tablet.cell-12-desktop > app-card-asset > div',
       (element) => {
         const token = element.querySelector("div.profile-asset > div > div")?.textContent ?? 'Não foi possível localizar o token'

@@ -4,10 +4,7 @@ export const get_data_inter = async (page: Page, search: string) => {
   const url = "https://interinvest.inter.co/acoes"
 
   try {
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'load' }),
-      page.goto(url, { waitUntil: 'load' })
-    ])
+    await page.goto(url, { waitUntil: 'load' })
     
     await page.focus('div.row.mb-4.mt-5 > div > div > input[type=text]')
     await page.keyboard.type(search).catch(

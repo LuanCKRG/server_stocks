@@ -5,10 +5,7 @@ export const get_safra_data = async (page: Page, token: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${token}`
 
   try {
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'load' }),
-      page.goto(url, { waitUntil: 'load' })
-    ])
+    await page.goto(url, { waitUntil: 'load' })
 
     try {
       await page.click('div.load-more > a.botao-outline')
@@ -21,7 +18,7 @@ export const get_safra_data = async (page: Page, token: string) => {
     await page.exposeFunction('getToken', getToken)
 
     await Promise.all([
-      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
+      page.waitForNavigation({ waitUntil: "load" }),
       page.$$eval(
         "div.s-col-12.resultados > div",
         async (elements, enterprise: string) => {
