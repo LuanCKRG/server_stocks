@@ -15,7 +15,7 @@ export const data = {
     return res.view("index", { stocks: undefined })
   },
 
-  get: async ( { body }: FastifyRequest<{ Body: getDataProps }>, res: FastifyReply ) => {
+  get: async ({ body }: FastifyRequest<{ Body: getDataProps }>, res: FastifyReply) => {
     const token = body.token.toLowerCase()
 
     console.log(token)
@@ -28,14 +28,26 @@ export const data = {
 
     const page = await browser.newPage()
 
-    const btg_data = await get_data_btg(page, token)
+
+    const { btg_data, xp_data } = await Promise.all([
+      get_data_btg(page, token),
+      get_data_xp(token)
+    ]).then(
+      (value) => {
+        return {
+          btg_data: value[0],
+          xp_data: value[1],
+        }
+      }
+    )
+
+    // const btg_data = await get_data_btg(page, token)
+    // const xp_data = await get_data_xp(token)
     const safra_data = await get_safra_data(page, token)
     const inter_data = await get_data_inter(page, token)
-    
+
     await page.close()
     await browser.close()
-
-    const xp_data = await get_data_xp(token)
 
     return res.view("index", { stocks: [safra_data, inter_data, xp_data, btg_data] })
   },
