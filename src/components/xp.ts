@@ -1,9 +1,8 @@
-import { Page } from "puppeteer"
 import { getTargetPrice } from "../utils/safra_utils"
 import axios from "axios"
 import { JSDOM } from 'jsdom'
 
-export const get_data_xp = async (page: Page, search: string) => {
+export const get_data_xp = async (search: string) => {
   const url = `https://conteudos.xpi.com.br/acoes/${search.toLowerCase()}`
 
   try {

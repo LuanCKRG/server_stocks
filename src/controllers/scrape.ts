@@ -28,13 +28,14 @@ export const data = {
 
     const page = await browser.newPage()
 
-    const xp_data = await get_data_xp(page, token)
+    const btg_data = await get_data_btg(page, token)
     const safra_data = await get_safra_data(page, token)
     const inter_data = await get_data_inter(page, token)
-    const btg_data = await get_data_btg(page, token)
-
+    
     await page.close()
     await browser.close()
+
+    const xp_data = await get_data_xp(token)
 
     return res.view("index", { stocks: [safra_data, inter_data, xp_data, btg_data] })
   },
