@@ -1,4 +1,5 @@
 import { Page } from "puppeteer"
+import { setToken } from "utils/firebase"
 
 export const get_data_inter = async (page: Page, search: string) => {
   const url = "https://interinvest.inter.co/acoes"
@@ -69,6 +70,9 @@ export const get_data_inter = async (page: Page, search: string) => {
     }
 
     console.log('Inter sucessed!!')
+
+    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, "inter")
+
     return data
 
   } catch (err) {

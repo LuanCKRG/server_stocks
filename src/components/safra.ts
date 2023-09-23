@@ -1,5 +1,6 @@
 import type { Page } from "puppeteer"
 import { getToken, getTargetPrice, getRecomedation } from "../utils/safra_utils"
+import { setToken } from "utils/firebase"
 
 export const get_safra_data = async (page: Page, token: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${token}`
@@ -7,14 +8,17 @@ export const get_safra_data = async (page: Page, token: string) => {
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded' })
 
-
-    await page.waitForSelector('div.load-more > a.botao-outline')
-    await page.click('div.load-more > a.botao-outline')
-    await page.click('div.load-more > a.botao-outline')
+    try {
+      await page.waitForSelector('div.load-more > a.botao-outline')
+      await page.click('div.load-more > a.botao-outline')
+      await page.click('div.load-more > a.botao-outline')
+    } catch (err) {
+      console.error(err)
+    }
 
     await page.exposeFunction('getToken', getToken)
 
-    await page.waitForSelector('div.s-col-12.resultados > div')
+    await page.waitForSelector('div.s-col-12.resultados > div').catch((err) => console.error(err))
 
     await Promise.all([
       page.waitForNavigation({ waitUntil: "domcontentloaded" }),
@@ -76,8 +80,10 @@ export const get_safra_data = async (page: Page, token: string) => {
     }
 
     console.log('Safra sucessed!!')
-    return data
 
+    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, 'safra')
+
+    return data
   } catch (err) {
     console.error(err)
 

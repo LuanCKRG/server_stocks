@@ -12,6 +12,8 @@ export const app = fastify({
 
 app.register(forms)
 
+app.register(cors)
+
 app.register(routes)
 
 app.register(views, {

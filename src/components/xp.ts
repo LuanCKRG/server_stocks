@@ -1,6 +1,7 @@
 import { getTargetPrice } from "../utils/safra_utils"
 import axios from "axios"
 import { JSDOM } from 'jsdom'
+import { setToken } from "utils/firebase"
 
 export const get_data_xp = async (search: string) => {
   const url = `https://conteudos.xpi.com.br/acoes/${search.toLowerCase()}`
@@ -23,6 +24,9 @@ export const get_data_xp = async (search: string) => {
     }
 
     console.log('XP sucessed!!')
+
+    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, "xp")
+
     return data
 
   } catch (err) {

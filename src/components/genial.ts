@@ -85,6 +85,8 @@ export const get_data_genial = async (page: Page, search: string) => {
       date: "Não fornecido por Genial Investimentos"
     }
 
+    console.log('Genial sucessed!!')
+
     return res
 
   } catch (err) {

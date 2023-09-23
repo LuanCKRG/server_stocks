@@ -1,4 +1,5 @@
 import { Page } from "puppeteer"
+import { setToken } from "utils/firebase"
 
 export const get_data_btg = async (page: Page, search: string) => {
   const url = `https://content.btgpactual.com/research/home/acoes/ativo/${search.toUpperCase()}`
@@ -37,6 +38,9 @@ export const get_data_btg = async (page: Page, search: string) => {
     }
 
     console.log('BTG sucessed!!')
+
+    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, "btg")
+
     return data
 
   } catch (err) {
