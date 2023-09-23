@@ -4,7 +4,8 @@ import { get_safra_data } from "../components/safra"
 import { get_data_inter } from "../components/inter"
 import { get_data_xp } from "../components/xp"
 import { get_data_btg } from "../components/btg"
-import "dotenv/config"
+import { get_data_genial } from "../components/genial"
+// import "dotenv/config"
 
 interface getDataProps {
   token: string
@@ -22,7 +23,7 @@ export const data = {
 
     const browser = await puppeteer.launch({
       headless: true,
-      executablePath: "/usr/bin/chromium-browser",
+      // executablePath: "/usr/bin/chromium-browser",
       args: ["--no-sandbox", "--disable-gpu"]
     })
 
@@ -45,10 +46,11 @@ export const data = {
     // const xp_data = await get_data_xp(token)
     const safra_data = await get_safra_data(page, token)
     const inter_data = await get_data_inter(page, token)
+    const genial_data = await get_data_genial(page, token)
 
-    await page.close()
-    await browser.close()
+    // await page.close()
+    // await browser.close()
 
-    return res.view("index", { stocks: [safra_data, inter_data, xp_data, btg_data] })
+    return res.view("index", { stocks: [safra_data, inter_data, xp_data, btg_data, genial_data] })
   },
 }

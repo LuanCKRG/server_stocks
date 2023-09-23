@@ -48,7 +48,7 @@ export const get_data_btg = async (page: Page, search: string) => {
       recomendation: "Não foi possível localizar a recomendação",
       src: "BTG Pactual",
       href: url,
-      date: "Não foi possível localizar a data",
+      date: "Não foi possível localizar a data"
     }
 
     return data

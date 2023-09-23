@@ -5,20 +5,19 @@ export const get_safra_data = async (page: Page, token: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${token}`
 
   try {
-    await page.goto(url, { waitUntil: 'load' })
+    await page.goto(url, { waitUntil: 'domcontentloaded' })
 
-    try {
-      await page.click('div.load-more > a.botao-outline')
-      await page.click('div.load-more > a.botao-outline')
-    } catch(err) {
-      console.error(err)
-      console.log('Eror on button click')
-    }
-    
+
+    await page.waitForSelector('div.load-more > a.botao-outline')
+    await page.click('div.load-more > a.botao-outline')
+    await page.click('div.load-more > a.botao-outline')
+
     await page.exposeFunction('getToken', getToken)
 
+    await page.waitForSelector('div.s-col-12.resultados > div')
+
     await Promise.all([
-      page.waitForNavigation({ waitUntil: "load" }),
+      page.waitForNavigation({ waitUntil: "domcontentloaded" }),
       page.$$eval(
         "div.s-col-12.resultados > div",
         async (elements, enterprise: string) => {
@@ -26,8 +25,8 @@ export const get_safra_data = async (page: Page, token: string) => {
           for (const element of elements) {
             /* @ts-expect-error: the function getToken() is not native from window */
             const token: string = await window.getToken(element.querySelector('p.cat')?.textContent ?? '')
-            .then((value: string) => value.toLowerCase())
-            .catch(() => 'Algo deu errado')
+              .then((value: string) => value.toLowerCase())
+              .catch(() => 'Algo deu errado')
 
             if (token === enterprise) {
               console.log(element)
@@ -91,6 +90,6 @@ export const get_safra_data = async (page: Page, token: string) => {
       date: 'Não foi possível localizar a data',
     }
 
-    return data 
+    return data
   }
 }

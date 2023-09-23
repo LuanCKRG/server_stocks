@@ -4,7 +4,7 @@ export const get_data_inter = async (page: Page, search: string) => {
   const url = "https://interinvest.inter.co/acoes"
 
   try {
-    await page.goto(url, { waitUntil: 'load' })
+    await page.goto(url, { waitUntil: 'domcontentloaded' })
     
     await page.focus('div.row.mb-4.mt-5 > div > div > input[type=text]')
     await page.keyboard.type(search).catch(
@@ -13,6 +13,8 @@ export const get_data_inter = async (page: Page, search: string) => {
         throw new Error('Error on Input(Inter)')
       }
     )
+
+    await page.waitForSelector("div.container >  div:nth-child(2) > div:nth-child(2).row > div.col-12.col-md-6.mb-4")
 
     const token = await Promise.all([
       page.waitForNavigation({ waitUntil: "domcontentloaded"}),
