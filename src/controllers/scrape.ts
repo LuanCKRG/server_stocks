@@ -5,7 +5,7 @@ import { get_data_inter } from "../components/inter"
 import { get_data_xp } from "../components/xp"
 import { get_data_btg } from "../components/btg"
 import { get_data_genial } from "../components/genial"
-import { getToken, setToken } from "utils/firebase"
+import { getToken, setToken } from "../utils/firebase"
 // import "dotenv/config"
 
 interface getDataProps {

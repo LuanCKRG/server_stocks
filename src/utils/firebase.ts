@@ -5,7 +5,7 @@ import { child, get, getDatabase, ref, set } from "firebase/database"
 // See: https://firebase.google.com/docs/web/learn-more#config-object
 const firebaseConfig = {
   apiKey: "AIzaSyD3yzY5aA3upV4LiVFoyGRyX2acLS2ND8c",
-  authDomain: "stocks-ckrg.firebaseapp.com",
+  authDomain: "api-scrape-stocks.onrender.com",
   projectId: "stocks-ckrg",
   storageBucket: "stocks-ckrg.appspot.com",
   messagingSenderId: "243689990477",

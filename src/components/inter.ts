@@ -1,5 +1,5 @@
 import { Page } from "puppeteer"
-import { setToken } from "utils/firebase"
+import { setToken } from "../utils/firebase"
 
 export const get_data_inter = async (page: Page, search: string) => {
   const url = "https://interinvest.inter.co/acoes"
