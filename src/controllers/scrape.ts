@@ -25,7 +25,7 @@ export const data = {
     const browser = await puppeteer.launch({
       ignoreHTTPSErrors: true,
       headless: true,
-      // executablePath: "/usr/bin/chromium-browser",
+      executablePath: "/usr/bin/chromium-browser",
       args: ["--no-sandbox", "--disable-gpu", '--disable-web-security', '--ignore-certificate-errors']
     })
 
@@ -43,7 +43,7 @@ export const data = {
     //     }
     //   }
     // )
-    await getToken(token, 'btg').then((v) => console.log(v))
+    
     const xp_data = await getToken(token, 'xp') ?? await get_data_xp(token);
     const btg_data = await getToken(token, 'btg') ?? await get_data_btg(page, token)
     const safra_data = await getToken(token, 'safra') ?? await get_safra_data(page, token)
