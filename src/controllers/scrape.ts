@@ -6,7 +6,7 @@ import { get_data_xp } from "../components/xp"
 import { get_data_btg } from "../components/btg"
 import { get_data_genial } from "../components/genial"
 import { getToken, setToken } from "../utils/firebase"
-// import "dotenv/config"
+import "dotenv/config"
 
 interface getDataProps {
   token: string
@@ -44,10 +44,10 @@ export const data = {
     //   }
     // )
     
-    const xp_data = await getToken(token, 'xp') ?? await get_data_xp(token);
-    const btg_data = await getToken(token, 'btg') ?? await get_data_btg(page, token)
+    const xp_data = await getToken(token, 'xp') ?? await get_data_xp(token)
     const safra_data = await getToken(token, 'safra') ?? await get_safra_data(page, token)
     const inter_data = await getToken(token, 'inter') ?? await get_data_inter(page, token)
+    const btg_data = await getToken(token, 'btg') ?? await get_data_btg(page, token)
     // const genial_data = await getToken(token, 'genial') ?? await get_data_genial(page, token)
 
     await page.close()

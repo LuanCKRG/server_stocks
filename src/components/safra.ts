@@ -33,7 +33,6 @@ export const get_safra_data = async (page: Page, token: string) => {
               .catch(() => 'Algo deu errado')
 
             if (token === enterprise) {
-              console.log(element)
               element.querySelector('a')?.click()
               break
             }

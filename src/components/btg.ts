@@ -8,11 +8,7 @@ export const get_data_btg = async (page: Page, search: string) => {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60 * 1000 })
     
 
-    await page.waitForSelector('body > app-root > app-equities > app-asset-details > section:nth-child(1) > div > div.cell-4-phone.cell-8-tablet.cell-12-desktop > app-card-asset > div')
-
-    // await Promise.all([
-    //   page.$eval('', (element) => element?.textContent),
-    // ])
+    await page.waitForSelector('body > app-root > app-equities > app-asset-details > section:nth-child(1) > div > div.cell-4-phone.cell-8-tablet.cell-12-desktop > app-card-asset > div').catch((err) => console.error(err))
 
     const {token, targetPrice, recomendation} = await page.$eval('body > app-root > app-equities > app-asset-details > section:nth-child(1) > div > div.cell-4-phone.cell-8-tablet.cell-12-desktop > app-card-asset > div',
       (element) => {
@@ -29,7 +25,7 @@ export const get_data_btg = async (page: Page, search: string) => {
     )
 
     const data = {
-      token: token.toUpperCase(),
+      token: token.toUpperCase().trim(),
       targetPrice: targetPrice,
       recomendation: recomendation,
       src: "BTG pactual",

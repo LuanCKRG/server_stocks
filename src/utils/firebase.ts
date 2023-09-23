@@ -28,13 +28,15 @@ export const setToken = (token: string, targetPrice: string, recomendation: stri
   })
 }
 
-export const getToken = async (search: string, org: 'safra' | 'xp' | 'inter' | 'btg') => {
-  const data = await get(
-    child(ref(database), `${org.toLowerCase()}/${search.toLowerCase()}`)
+export const getToken = (search: string, org: string) => {
+  const data = get(
+    child(
+      ref(database), `${org.toLowerCase()}/${search.toLowerCase()}`
+    )
   ).then(
     (snapshot) => {
+      // console.log(snapshot.val())
       if (snapshot.exists()) {
-        console.log(snapshot.val())
         return snapshot.val()
       }
     }
