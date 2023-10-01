@@ -21,7 +21,7 @@ RUN npm install
 
 EXPOSE 3000
 
-RUN apk update && apk add install -y redis-server
+RUN apk update && apk add -y redis-server
 
 ENTRYPOINT  ["/usr/bin/redis-server"]
 EXPOSE 6379
