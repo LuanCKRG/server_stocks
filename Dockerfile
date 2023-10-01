@@ -1,5 +1,9 @@
 FROM node:lts-alpine
 
+RUN apk add --update redis
+
+ENTRYPOINT  ["/usr/bin/redis-server"]
+
 WORKDIR /app
 
 RUN apk update && apk add --no-cache nmap && \
@@ -14,14 +18,11 @@ RUN apk update && apk add --no-cache nmap && \
       nss
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-RUN apk add --update redis
 
 COPY . /app
 
 RUN npm install
 
-EXPOSE 3000
-
-EXPOSE 6379
+EXPOSE 3000 6379
 
 CMD ["npm", "start"]
