@@ -24,4 +24,4 @@ RUN npm install
 
 EXPOSE 3000 6379
 
-CMD ["npm", "start"];["redis-server"]
+CMD ["npm", "start", "redis-server"]
