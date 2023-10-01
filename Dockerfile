@@ -16,8 +16,6 @@ RUN apk update && apk add --no-cache nmap && \
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 RUN apk add --update redis
 
-ENTRYPOINT  ["/usr/bin/redis-server"]
-
 COPY . /app
 
 RUN npm install
