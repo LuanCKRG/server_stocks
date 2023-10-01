@@ -4,9 +4,6 @@ WORKDIR /app
 
 RUN apk add --update redis
 
-ENTRYPOINT  ["/usr/bin/redis-server"]
-
-
 RUN apk update && apk add --no-cache nmap && \
     echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
     echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
@@ -20,10 +17,11 @@ RUN apk update && apk add --no-cache nmap && \
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-RUN npm install
-
 COPY . /app
 
+RUN npm install
+
+ENTRYPOINT  ["/usr/bin/redis-server"]
 
 EXPOSE 3000 6379
 
