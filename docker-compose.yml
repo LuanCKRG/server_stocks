@@ -1,3 +1,26 @@
+version: "3"
 services:
   stocks:
-    iamge: 
+    container_name: stocks
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=dev
+      - PORT=3000
+      - API_KEY=AIzaSyD3yzY5aA3upV4LiVFoyGRyX2acLS2ND8c
+      - AUTH_DOMAIN=api-scrape-stocks.onrender.com
+      - PROJECT_ID=stocks-ckrg
+      - STORAGE_BUCKET=stocks-ckrg.appspot.com
+      - MESSAGING_SENDER_ID=243689990477
+      - APP_ID=1:243689990477:web:4f84ec930beaee21beef04
+      - DATABASE_URL=https://stocks-ckrg-default-rtdb.firebaseio.com/
+      - QUEUE_HOST=localhost
+      - QUEUE_PORT=6379
+  redis:
+    container_name: queue
+    ports:
+      - "6379:6379"
+    image: "redis/redis-stack-server:latest"
