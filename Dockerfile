@@ -14,7 +14,8 @@ RUN apk update && apk add --no-cache nmap && \
       ttf-freefont \
       nss
 
-RUN apk add --update redis
+RUN apk add --update redis && \
+    printf "npm run start\nredis-server" > entrypoint.sh
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
@@ -26,4 +27,4 @@ EXPOSE 3000 6379
 
 # nohup redis-server
 
-CMD ["npm", "start"];["/bin/sh", "redis-server"]
+CMD ["/bin/sh", "entrypoint.sh"]
