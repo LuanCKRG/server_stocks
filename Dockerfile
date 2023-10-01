@@ -1,10 +1,9 @@
-FROM node:lts-alpine
+FROM node:lts-alpine AS base
 
 WORKDIR /app
 
-RUN apk add --update redis
-
 RUN apk update && apk add --no-cache nmap && \
+    apk add redis-server\
     echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
     echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
     apk update && \
@@ -17,12 +16,12 @@ RUN apk update && apk add --no-cache nmap && \
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
+
+
 COPY . /app
 
 RUN npm install
 
-ENTRYPOINT  ["/usr/bin/redis-server"]
-
-EXPOSE 3000 6379
+EXPOSE 3000
 
 CMD ["npm", "start"]
