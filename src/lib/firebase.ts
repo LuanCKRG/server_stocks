@@ -1,7 +1,7 @@
 import { child, get, getDatabase, ref, set } from "firebase/database"
-import { firebaseConfig } from "config/firebaseConfig"
 import { initializeApp } from "firebase/app"
-import { Stock } from "types"
+import { firebaseConfig } from "../config/firebaseConfig"
+import { Stock } from "../types"
 
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
