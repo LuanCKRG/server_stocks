@@ -1,5 +1,6 @@
 import { Page } from "puppeteer"
-import { setToken } from "../utils/firebase"
+import { Firebase } from "../lib/firebase"
+import { Stock } from "types"
 
 export const get_data_btg = async (page: Page, search: string) => {
   const url = `https://content.btgpactual.com/research/home/acoes/ativo/${search.toUpperCase()}`
@@ -24,31 +25,33 @@ export const get_data_btg = async (page: Page, search: string) => {
       }
     )
 
-    const data = {
+    const data: Stock = {
       token: token.toUpperCase().trim(),
       targetPrice: targetPrice,
       recomendation: recomendation,
       src: "BTG pactual",
       href: url,
       date: 'Não fornecido por BTG Pactual',
+      org: 'btg'
     }
 
     console.log('BTG sucessed!!')
 
-    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, "btg")
+    Firebase.setStock(data)
 
     return data
 
   } catch (err) {
     console.error(err)
 
-    const data = {
+    const data: Stock = {
       token: "Não foi possível localizar o token",
       targetPrice: "Não foi possível localizar o preço alvo",
       recomendation: "Não foi possível localizar a recomendação",
       src: "BTG Pactual",
       href: url,
-      date: "Não foi possível localizar a data"
+      date: "Não foi possível localizar a data",
+      org: 'btg'
     }
 
     return data

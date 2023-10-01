@@ -92,7 +92,7 @@ export const get_data_genial = async (page: Page, search: string) => {
   } catch (err) {
     console.error(err)
 
-    const data = {
+    const data: Stock = {
       token: "Não foi possível localizar o token",
       targetPrice: "Não foi possível localizar o preço alvo",
       recomendation: "Não foi possível localizar a recomendação",

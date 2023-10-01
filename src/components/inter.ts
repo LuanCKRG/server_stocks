@@ -1,5 +1,6 @@
 import { Page } from "puppeteer"
-import { setToken } from "../utils/firebase"
+import { Firebase } from "../lib/firebase"
+import { Stock } from "types"
 
 export const get_data_inter = async (page: Page, search: string) => {
   const url = "https://interinvest.inter.co/acoes"
@@ -59,19 +60,20 @@ export const get_data_inter = async (page: Page, search: string) => {
 
     const href = page.url()
 
-    const data = {
+    const data: Stock = {
       token: token ?? "Não foi possível localizar o token",
       targetPrice: targetPrice ?? "Não foi possível localizar o preço alvo",
       recomendation: recomendation ?? "Não foi possível localizar a recomendação",
       src: "Inter Invest",
       href,
       date: "Não fornecido por Inter Invest",
+      org: 'inter'
 
     }
 
     console.log('Inter sucessed!!')
 
-    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, "inter")
+    Firebase.setStock(data)
 
     return data
 
@@ -79,13 +81,14 @@ export const get_data_inter = async (page: Page, search: string) => {
     console.log('Erro on Inter component')
     console.error(err)
 
-    const data = {
+    const data: Stock = {
       token: "Não foi possível localizar o token",
       targetPrice: "Não foi possível localizar o preço alvo",
       recomendation: "Não foi possível localizar a recomendação",
       src: "Inter Invest",
       href: url,
       date: "Não foi possível localizar a data",
+      org: 'inter'
     }
 
     return data

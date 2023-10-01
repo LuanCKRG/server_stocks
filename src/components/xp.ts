@@ -1,7 +1,8 @@
-import { getTargetPrice } from "../utils/safra_utils"
 import axios from "axios"
 import { JSDOM } from 'jsdom'
-import { setToken } from "../utils/firebase"
+import { getTargetPrice } from "../utils/safra_utils"
+import { Firebase } from "../lib/firebase"
+import { Stock } from "types"
 
 export const get_data_xp = async (search: string) => {
   const url = `https://conteudos.xpi.com.br/acoes/${search.toLowerCase()}`
@@ -14,85 +15,36 @@ export const get_data_xp = async (search: string) => {
     const recomendation = dom.window.document.querySelector('#main > div:nth-child(3) > ul > li:nth-child(5) > span.recomendacao')?.textContent ?? ''
     const date = dom.window.document.querySelector('#main > div:nth-child(3) > div.row.py-4.my-2.top-bordered > div.col-7.text-right > div > p')?.textContent ?? ''
 
-    const data = {
+    const data: Stock = {
       token: search.toUpperCase(),
       targetPrice: targetPrice,
       recomendation: recomendation,
       src: "XP",
       href: url,
       date: date,
+      org: 'xp'
     }
 
     console.log('XP sucessed!!')
 
-    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, "xp")
+    Firebase.setStock(data)
 
     return data
 
   } catch (err) {
     console.error(new Error('Not found page on XP'))
 
-    const data = {
+    const data: Stock = {
       token: "Não foi possível localizar o token",
       targetPrice: "Não foi possível localizar o preço alvo",
       recomendation: "Não foi possível localizar a recomendação",
       src: "XP",
       href: url,
       date: "Não foi possível localizar a data",
+      org: 'xp'
     }
 
     return data
   }
 
-
-  // try {
-  //   await Promise.all([
-  //     page.waitForNavigation({ waitUntil: 'load' }),
-  //     page.goto(url, { waitUntil: 'load' })
-  //   ])
-
-  //   const {recomendation, targetPrice, date} = await page.$eval('#main > div:nth-child(3)',
-  //     (element) => {
-  //       const targetPrice = element.querySelector("ul > li:nth-child(2)")?.textContent ?? 'Não foi possível localizar o preço-alvo'
-  //       const recomendation = element.querySelector("ul > li:nth-child(5) > span.recomendacao")?.textContent ?? 'Não foi possível localizar a recomendação'
-  //       const date = element.querySelector("div.row.py-4.my-2.top-bordered > div.col-7.text-right > div > p")?.textContent ?? 'Não foi possível localizar a data'
-
-  //       return { targetPrice, recomendation, date}
-  //     }
-  //   ).then(
-  //     (value) => {
-  //       return value
-  //     }
-  //   ).catch(
-  //     (err) => {
-  //       console.error(err)
-  //       throw new Error('Not found page from XP')
-  //     }
-  //   )
-
-  //   const data = {
-  //     token: search.toUpperCase(),
-  //     targetPrice: getTargetPrice(targetPrice),
-  //     recomendation: recomendation,
-  //     src: "XP",
-  //     href: url,
-  //     date: date,
-  //   }
-
-  //   return data
-
-  // } catch(err) {
-  //   console.error(err)
-
-  //   const data = {
-  //     token: "Não foi possível localizar o token",
-  //     targetPrice: "Não foi possível localizar o preço alvo",
-  //     recomendation: "Não foi possível localizar a recomendação",
-  //     src: "XP",
-  //     href: url,
-  //     date: "Não foi possível localizar a data",
-  //   }
-
-  //   return data
-  // }
 }

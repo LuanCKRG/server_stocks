@@ -1,6 +1,7 @@
 import type { Page } from "puppeteer"
 import { getToken, getTargetPrice, getRecomedation } from "../utils/safra_utils"
-import { setToken } from "../utils/firebase"
+import { Firebase } from "../lib/firebase"
+import { Stock } from "types"
 
 export const get_safra_data = async (page: Page, token: string) => {
   const url = `https://www.safra.com.br/resultado-de-busca.htm?query=analise%20${token}`
@@ -69,30 +70,32 @@ export const get_safra_data = async (page: Page, token: string) => {
       throw new Error('Not found date, subtitle, tilte from safra')
     })
 
-    const data = {
+    const data: Stock = {
       token: getToken(title),
       targetPrice: getTargetPrice(subtitle),
       recomendation: getRecomedation(subtitle),
       src: "Banco Safra",
       href,
       date,
+      org: 'safra'
     }
 
     console.log('Safra sucessed!!')
 
-    setToken(data.token, data.targetPrice, data.recomendation, data.src, data.href, data.date, 'safra')
+    Firebase.setStock(data)
 
     return data
   } catch (err) {
     console.error(err)
 
-    const data = {
+    const data: Stock = {
       token: 'Não foi possível localizar o token',
       targetPrice: 'Não foi possível localizar o preço alvo',
       recomendation: 'Não foi possível localizar a recomendação',
       src: "Banco Safra",
       href: url,
       date: 'Não foi possível localizar a data',
+      org: 'safra'
     }
 
     return data

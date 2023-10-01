@@ -1,4 +1,5 @@
 FROM node:lts-alpine
+FROM redis/redis/redis-stack
 
 WORKDIR /app
 
@@ -19,6 +20,6 @@ COPY . /app
 
 RUN npm install
 
-EXPOSE 3000
+EXPOSE 3000 6379
 
 CMD ["npm", "start"]
