@@ -15,11 +15,9 @@ RUN apk update && apk add --no-cache nmap && \
       ttf-freefont \
       nss
 
-RUN apk --update add redis-server
+RUN apk add --update redis
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-
-
 
 COPY . /app
 
