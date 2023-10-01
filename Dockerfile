@@ -3,7 +3,7 @@ FROM node:lts-alpine
 WORKDIR /app
 
 RUN apk update && apk add --no-cache nmap && \
-    apk update && apk aadd install -y redis-server\
+    apk update && apk add install -y redis-server\
     echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
     echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories && \
     apk update && \
