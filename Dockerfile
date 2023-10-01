@@ -26,4 +26,4 @@ EXPOSE 3000 6379
 
 # nohup redis-server
 
-CMD "redis-server && npm run start"
+CMD "npm run start";"redis-server"
