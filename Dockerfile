@@ -1,5 +1,5 @@
 FROM node:lts-alpine
-FROM redis/redis/redis-stack
+FROM redis/redis-stack
 
 WORKDIR /app
 
