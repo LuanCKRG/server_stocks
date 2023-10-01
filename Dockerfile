@@ -14,6 +14,9 @@ RUN apk update && apk add --no-cache nmap && \
       nss
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+RUN apk add --update redis
+
+ENTRYPOINT  ["/usr/bin/redis-server"]
 
 COPY . /app
 
@@ -21,9 +24,6 @@ RUN npm install
 
 EXPOSE 3000
 
-RUN apk add --update redis
-
-ENTRYPOINT  ["/usr/bin/redis-server"]
 EXPOSE 6379
 
 CMD ["npm", "start"]
