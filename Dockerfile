@@ -15,7 +15,7 @@ RUN apk update && apk add --no-cache nmap && \
       nss
 
 RUN apk add --update redis && \
-    printf "npm run start\nredis-server" > entrypoint.sh
+    printf "redis-server --bind '0.0.0.0'\nnpm run start" > entrypoint.sh
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
