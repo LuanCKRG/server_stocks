@@ -15,14 +15,14 @@ RUN apk update && apk add --no-cache nmap && \
       nss
 
 RUN apk add --update redis && \
-    npm install -g concurrently && \
-    npm run build
+    npm install -g concurrently
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 COPY . /app
 
-RUN npm install
+RUN npm install && \
+    npm run build
 
 EXPOSE 3000 6379
 
