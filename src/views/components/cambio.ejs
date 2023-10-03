@@ -1,0 +1,38 @@
+<section class="flex flex-col border-2 rounded-lg p-2">
+  <div class="w-full border-b-2 border-black">
+    <h2 class="text-center">
+      <b>
+        <%= name %>
+      </b>
+    </h2>
+  </div>
+  <div class="space-y-0 grid gap-4 grid-cols-4 px-4 border-b-2 border-black">
+    <% for (const data of table) {%>
+      <div class="flex flex-col items-center justify-center">
+        <b>
+          <%= data.year %>
+        </b>
+        <p>
+          <%= data.cambio %>
+        </p>
+      </div>
+      <%}%>
+  </div>
+  <div>
+    <div>
+      Data: <b>
+        <%= date %>
+      </b>
+    </div>
+    <div>
+      Orgão: <b>
+        <%= src %>
+      </b>
+    </div>
+  </div>
+  <div class="mx-auto underline">
+    <a href=<%= href %>>
+      Fonte
+    </a>
+  </div>
+</section>

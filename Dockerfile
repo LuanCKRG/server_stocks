@@ -15,7 +15,8 @@ RUN apk update && apk add --no-cache nmap && \
       nss
 
 RUN apk add --update redis && \
-    npm install -g concurrently
+    npm install -g concurrently && \
+    npm run build
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
@@ -25,6 +26,4 @@ RUN npm install
 
 EXPOSE 3000 6379
 
-# nohup redis-server
-
-CMD concurrently "/usr/bin/redis-server --bind '0.0.0.0'" "sleep 2s; npm run start"
+CMD concurrently "/usr/bin/redis-server --bind '0.0.0.0'" "npm run start"

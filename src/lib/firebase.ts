@@ -1,7 +1,7 @@
 import { child, get, getDatabase, ref, set } from "firebase/database"
 import { initializeApp } from "firebase/app"
 import { firebaseConfig } from "../config/firebaseConfig"
-import { Stock } from "../types"
+import { BradescoOpinion, Stock } from "../types"
 
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
@@ -36,5 +36,27 @@ export const Firebase = {
       href,
       date
     })
+  },
+  setBradesco: async (BradescoOpinion: BradescoOpinion) => {
+    set(ref(database, `bradesco`), BradescoOpinion)
+  },
+  getBradesco: async () => {
+    const data: BradescoOpinion = await get(
+      child(
+        ref(database), `Bradesco`
+      )
+    ).then(
+      (snapshot) => {
+        if (snapshot.exists()) {
+          return snapshot.val()
+        }
+      }
+    ).catch(
+      (err) => {
+        console.error(err)
+      }
+    )
+    
+    return data  
   }
 }

@@ -23,9 +23,11 @@
     </div>
   <%} else {%>
     <div class="flex flex-col space-y-4 justify-center sm:space-y-0 sm:grid sm:gap-4 sm:grid-cols-2 lg:gap-8 lg:grid-cols-3 px-4">
-      <% for (const data of stocks) {%>
+      <% for (const data of stocks.stocks) {%>
         <%- include("./components/stock", {token: data.token, href: data.href, src: data.src, targetPrice: data.targetPrice, recomendation: data.recomendation, date: data.date}) %>
       <%} %>
+      
+      <%- include("./components/cambio", {name: stocks.bradesco.name, src: stocks.bradesco.src, href: stocks.bradesco.href,date: stocks.bradesco.date, table: stocks.bradesco.table}) %>
     </div>
   <%}%>
 

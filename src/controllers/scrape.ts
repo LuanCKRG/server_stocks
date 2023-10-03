@@ -7,6 +7,8 @@ import { get_data_btg } from "../components/btg"
 import { Firebase } from "../lib/firebase"
 import { puppeteerConfig } from "../config/puppeteerConfig"
 import { queue } from "../lib/queue"
+import { get_data_bradesco } from "../components/bradesco"
+import { FinalResult } from "../types"
 
 interface BodyGetDataProps {
   token: string
@@ -24,17 +26,23 @@ export const data = {
 
     const browser = await puppeteer.launch(puppeteerConfig)
     const page = await browser.newPage()
-    
-    const xp_data = await Firebase.getStock(token, 'xp') ?? await get_data_xp(token)
-    const safra_data = await Firebase.getStock(token, 'safra') ?? await get_safra_data(page, token)
-    const inter_data = await Firebase.getStock(token, 'inter') ?? await get_data_inter(page, token)
-    const btg_data = await Firebase.getStock(token, 'btg') ?? await get_data_btg(page, token)
+
+    const data: FinalResult = {
+      stocks: [
+        await Firebase.getStock(token, 'xp') ?? await get_data_xp(token),
+        await Firebase.getStock(token, 'safra') ?? await get_safra_data(page, token),
+        await Firebase.getStock(token, 'inter') ?? await get_data_inter(page, token),
+        await Firebase.getStock(token, 'btg') ?? await get_data_btg(page, token)
+      ],
+      bradesco: await Firebase.getBradesco() ?? await get_data_bradesco()
+    }
 
     queue.add(token)
 
     await page.close()
     await browser.close()
 
-    return res.view("index", { stocks: [safra_data, inter_data, xp_data, btg_data /*, genial_data*/] })
+    return res.view("index", { stocks: data })
+    // return res.view("index", { stocks: undefined })
   },
 }
