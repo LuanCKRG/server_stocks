@@ -43,7 +43,7 @@ export const Firebase = {
   getBradesco: async () => {
     const data: BradescoOpinion = await get(
       child(
-        ref(database), `Bradesco`
+        ref(database), `bradesco`
       )
     ).then(
       (snapshot) => {
@@ -56,7 +56,7 @@ export const Firebase = {
         console.error(err)
       }
     )
-    
+
     return data  
   }
 }

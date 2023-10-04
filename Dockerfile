@@ -26,4 +26,4 @@ RUN npm install && \
 
 EXPOSE 3000 6379
 
-CMD concurrently "/usr/bin/redis-server --bind '0.0.0.0'" "npm run start"
+CMD concurrently "/usr/bin/redis-server --bind '127.0.0.1'" "npm run start"

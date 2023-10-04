@@ -2,6 +2,7 @@ import axios from "axios"
 import {JSDOM} from 'jsdom'
 import { Firebase } from "../lib/firebase"
 import { BradescoOpinion, BradescoTable } from "../types"
+import { getDate } from "../utils/stocks"
 
 export const get_data_bradesco = async () => {
   const url = 'https://www.economiaemdia.com.br/SiteEconomiaEmDia/Projecoes/Longo-Prazo'
@@ -45,7 +46,7 @@ export const get_data_bradesco = async () => {
     const result: BradescoOpinion = {
       name,
       table: data,
-      date,
+      date: getDate(date) ?? 'Não foi possível localizar a data',
       href: url,
       src: 'Economia em dia'
     }

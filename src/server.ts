@@ -1,6 +1,5 @@
 import { env } from "./env"
 import { app } from "./app"
-import {cron} from './lib/cron'
 
 app.listen({ port: env.PORT, host: "0.0.0.0" }, (err, adress) => {
   if (err) {
@@ -17,5 +16,3 @@ app.listen({ port: env.PORT, host: "0.0.0.0" }, (err, adress) => {
   }
 
 })
-
-cron.startRender()

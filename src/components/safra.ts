@@ -1,5 +1,5 @@
 import type { Page } from "puppeteer"
-import { getToken, getTargetPrice, getRecomedation } from "../utils/safra_utils"
+import { getToken, getTargetPrice, getRecomedation } from "../utils/stocks"
 import { Firebase } from "../lib/firebase"
 import { Stock } from "types"
 
@@ -71,6 +71,7 @@ export const get_safra_data = async (page: Page, token: string) => {
     })
 
     const data: Stock = {
+      created_at: new Date(),
       token: getToken(title),
       targetPrice: getTargetPrice(subtitle),
       recomendation: getRecomedation(subtitle),
@@ -89,6 +90,7 @@ export const get_safra_data = async (page: Page, token: string) => {
     console.error(err)
 
     const data: Stock = {
+      created_at: new Date(),
       token: 'Não foi possível localizar o token',
       targetPrice: 'Não foi possível localizar o preço alvo',
       recomendation: 'Não foi possível localizar a recomendação',

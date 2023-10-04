@@ -6,13 +6,19 @@ import { get_data_xp } from "../components/xp"
 import { puppeteerConfig } from "../config/puppeteerConfig"
 import { queueConfig } from "../config/queueConfig"
 import puppeteer from "puppeteer"
+import { get_data_bradesco } from "../components/bradesco"
 
 export const queue = {
-  add: (stock: string) => {
+  addStock: (stock: string) => {
     const StockQueue = new Queue('stock', queueConfig)
 
     StockQueue.add('stock', stock)
-  }
+  },
+  addCambio: () => {
+    const CambioQueue = new Queue('cambio', queueConfig)
+
+    CambioQueue.add('cambio', 'bradesco')
+  },
 }
 
 
@@ -44,6 +50,29 @@ StockWorker.on('completed',
 )
 
 StockWorker.on('failed',
+  (job, error) => {
+    console.log('Algo deu errado')
+    console.error(error)
+  }
+)
+
+const CambioWorker = new Worker('cambio',
+  async (job) => {
+    const {data: name} = job
+
+    await get_data_bradesco()
+
+    return {dataProcessed: true}
+  }, queueConfig
+)
+
+CambioWorker.on('completed',
+  (job) => {
+    console.log(job.data, 'atualizado com sucesso')
+  }
+)
+
+CambioWorker.on('failed',
   (job, error) => {
     console.log('Algo deu errado')
     console.error(error)

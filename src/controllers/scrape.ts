@@ -9,6 +9,7 @@ import { puppeteerConfig } from "../config/puppeteerConfig"
 import { queue } from "../lib/queue"
 import { get_data_bradesco } from "../components/bradesco"
 import { FinalResult } from "../types"
+import { diffInDays } from "../utils/stocks"
 
 interface BodyGetDataProps {
   token: string
@@ -37,7 +38,11 @@ export const data = {
       bradesco: await Firebase.getBradesco() ?? await get_data_bradesco()
     }
 
-    queue.add(token)
+    if (diffInDays(new Date(data.bradesco.date)) >= 30) {
+      queue.addCambio()
+    }
+
+    queue.addStock(token)
 
     await page.close()
     await browser.close()

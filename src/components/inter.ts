@@ -61,6 +61,7 @@ export const get_data_inter = async (page: Page, search: string) => {
     const href = page.url()
 
     const data: Stock = {
+      created_at: new Date(),
       token: token ?? "Não foi possível localizar o token",
       targetPrice: targetPrice ?? "Não foi possível localizar o preço alvo",
       recomendation: recomendation ?? "Não foi possível localizar a recomendação",
@@ -82,6 +83,7 @@ export const get_data_inter = async (page: Page, search: string) => {
     console.error(err)
 
     const data: Stock = {
+      created_at: new Date(),
       token: "Não foi possível localizar o token",
       targetPrice: "Não foi possível localizar o preço alvo",
       recomendation: "Não foi possível localizar a recomendação",

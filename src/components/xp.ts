@@ -1,6 +1,6 @@
 import axios from "axios"
 import { JSDOM } from 'jsdom'
-import { getTargetPrice } from "../utils/safra_utils"
+import { getTargetPrice } from "../utils/stocks"
 import { Firebase } from "../lib/firebase"
 import { Stock } from "types"
 
@@ -16,6 +16,7 @@ export const get_data_xp = async (search: string) => {
     const date = dom.window.document.querySelector('#main > div:nth-child(3) > div.row.py-4.my-2.top-bordered > div.col-7.text-right > div > p')?.textContent ?? ''
 
     const data: Stock = {
+      created_at: new Date(),
       token: search.toUpperCase(),
       targetPrice: targetPrice,
       recomendation: recomendation,
@@ -35,6 +36,7 @@ export const get_data_xp = async (search: string) => {
     console.error(new Error('Not found page on XP'))
 
     const data: Stock = {
+      created_at: new Date(),
       token: "Não foi possível localizar o token",
       targetPrice: "Não foi possível localizar o preço alvo",
       recomendation: "Não foi possível localizar a recomendação",

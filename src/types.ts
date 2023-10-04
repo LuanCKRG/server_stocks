@@ -6,6 +6,7 @@ export interface Stock {
   href: string
   date: string
   org: Org
+  created_at: Date
 }
 
 export type Org = 'xp' | 'safra' | 'inter' | 'btg'
