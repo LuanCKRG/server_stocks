@@ -11,14 +11,14 @@ export interface Stock {
 
 export type Org = 'xp' | 'safra' | 'inter' | 'btg'
 
-export interface BradescoTable {
+export interface CambioTable {
   year: string
   cambio: string
 }
 
-export interface BradescoOpinion {
+export interface CambioSheet {
   name: string
-  table: BradescoTable[]
+  table: CambioTable[]
   date: string
   href: string
   src: string
@@ -26,5 +26,5 @@ export interface BradescoOpinion {
 
 export interface FinalResult {
   stocks: Stock[]
-  bradesco: BradescoOpinion
+  sheets: CambioSheet[]
 }

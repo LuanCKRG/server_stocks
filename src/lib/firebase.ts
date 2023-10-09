@@ -1,16 +1,18 @@
-import { child, get, getDatabase, ref, set } from "firebase/database"
 import { initializeApp } from "firebase/app"
+import { child, get, getDatabase, ref as refDatabase, set } from "firebase/database"
+import {getDownloadURL, getStorage, getStream, ref as refStorage, uploadBytes} from "firebase/storage"
 import { firebaseConfig } from "../config/firebaseConfig"
 import { BradescoOpinion, Stock } from "../types"
 
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
+const storage = getStorage(app)
 
 export const Firebase = {
   getStock: async (search: string, org: string) => {
     const data: Stock = await get(
       child(
-        ref(database), `${org.toLowerCase()}/${search.toLowerCase()}`
+        refDatabase(database), `${org.toLowerCase()}/${search.toLowerCase()}`
       )
     ).then(
       (snapshot) => {
@@ -28,7 +30,7 @@ export const Firebase = {
     return data    
   },
   setStock: async ({token, date, org, recomendation, src, targetPrice, href}: Stock) => {
-    set(ref(database, `${org.toLowerCase()}/${token.toLowerCase()}`), {
+    set(refDatabase(database, `${org.toLowerCase()}/${token.toLowerCase()}`), {
       token,
       targetPrice,
       recomendation,
@@ -38,12 +40,12 @@ export const Firebase = {
     })
   },
   setBradesco: async (BradescoOpinion: BradescoOpinion) => {
-    set(ref(database, `bradesco`), BradescoOpinion)
+    set(refDatabase(database, `bradesco`), BradescoOpinion)
   },
   getBradesco: async () => {
     const data: BradescoOpinion = await get(
       child(
-        ref(database), `bradesco`
+        refDatabase(database), `bradesco`
       )
     ).then(
       (snapshot) => {
@@ -58,5 +60,11 @@ export const Firebase = {
     )
 
     return data  
+  },
+  addFileOnStorage: async (file: any) => {
+    uploadBytes(refStorage(storage, 'itau.xlsx'), file)
+  },
+  getFile: async () => {
+    
   }
 }

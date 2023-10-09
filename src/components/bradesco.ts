@@ -1,7 +1,7 @@
 import axios from "axios"
 import {JSDOM} from 'jsdom'
 import { Firebase } from "../lib/firebase"
-import { BradescoOpinion, BradescoTable } from "../types"
+import { CambioSheet, CambioTable } from "../types"
 import { getDate } from "../utils/stocks"
 
 export const get_data_bradesco = async () => {
@@ -34,7 +34,7 @@ export const get_data_bradesco = async () => {
       }
     }
 
-    const data: BradescoTable[] = []
+    const data: CambioTable[] = []
 
     for (let i = 0; i < years.length; i++) {
       data.push({
@@ -43,28 +43,27 @@ export const get_data_bradesco = async () => {
       })
     }
 
-    const result: BradescoOpinion = {
+    const result: CambioSheet = {
       name,
       table: data,
-      date: getDate(date) ?? 'Não foi possível localizar a data',
+      date,
       href: url,
       src: 'Economia em dia'
     }
 
-    Firebase.setBradesco(result)
+    await Firebase.setBradesco(result)
 
     return result
 
   } catch (err) {
     console.error(err)
 
-    const result: BradescoOpinion = {
+    const result: CambioSheet = {
       name: 'Não foi possível localizar o nome',
       table: [],
       date: 'Não foi possível localizar a data',
       href: url,
       src: 'economia em dia'
-
     }
 
     return result

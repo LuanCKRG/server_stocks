@@ -19,7 +19,7 @@
 
   <% if(stocks === undefined) {%>
     <div class="flex justify-center items-center">
-      Busque por um token para obter resultados...
+      Busque por um ticket para obter resultados...
     </div>
   <%} else {%>
     <div class="flex flex-col space-y-4 justify-center sm:space-y-0 sm:grid sm:gap-4 sm:grid-cols-2 lg:gap-8 lg:grid-cols-3 px-4">
@@ -27,8 +27,10 @@
         <%- include("./components/stock", {token: data.token, href: data.href, src: data.src, targetPrice: data.targetPrice, recomendation: data.recomendation, date: data.date}) %>
       <%} %>
       
-      <%- include("./components/cambio", {name: stocks.bradesco.name, src: stocks.bradesco.src, href: stocks.bradesco.href,date: stocks.bradesco.date, table: stocks.bradesco.table}) %>
-      <%-  include("./components/itau") %>
+      <%for (const data of stocks.sheets) {%>
+        <%- include("./components/cambio", {name: data.name, src: data.src, href: data.href,date: data.date, table: data.table}) %>
+      <%}%>
+      
     </div>
   <%}%>
 

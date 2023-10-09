@@ -10,6 +10,7 @@ import { queue } from "../lib/queue"
 import { get_data_bradesco } from "../components/bradesco"
 import { FinalResult } from "../types"
 import { diffInDays } from "../utils/stocks"
+import { get_data_itau } from "../components/itau"
 
 interface BodyGetDataProps {
   token: string
@@ -35,19 +36,23 @@ export const data = {
         await Firebase.getStock(token, 'inter') ?? await get_data_inter(page, token),
         await Firebase.getStock(token, 'btg') ?? await get_data_btg(page, token)
       ],
-      bradesco: await Firebase.getBradesco() ?? await get_data_bradesco()
+      sheets: [
+        await get_data_bradesco(),
+        await get_data_itau()
+
+      ]
     }
 
-    if (diffInDays(new Date(data.bradesco.date)) >= 30) {
-      queue.addCambio()
-    }
+    // if (diffInDays(new Date(data.bradesco.date)) >= 30) {
+    //   queue.addCambio()
+    // }
 
-    queue.addStock(token)
+    // queue.addStock(token)
 
     await page.close()
     await browser.close()
 
     return res.view("index", { stocks: data })
     // return res.view("index", { stocks: undefined })
-  },
+  }
 }
